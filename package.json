@@ -1,0 +1,25 @@
+{
+  "name": "user.api",
+  "version": "1.0.0",
+  "description": "API gateway exposing functionality to the outside world",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm-run-all server:run server:logs",
+    "server:run": "pm2 start processes.json -i max --watch",
+    "server:logs": "pm2 logs all"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-link": "^1.2.2",
+    "apollo-link-context": "^1.0.8",
+    "apollo-link-http": "^1.5.4",
+    "dotenv": "^6.0.0",
+    "graphql-tools": "^3.0.2",
+    "graphql-yoga": "^1.14.6",
+    "node-fetch": "^2.1.2",
+    "prisma-binding": "^2.0.2",
+    "winston": "^3.0.0"
+  }
+}
