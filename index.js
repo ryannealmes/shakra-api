@@ -1,10 +1,8 @@
-// Load environment variables
-require('dotenv').config()
-
 const logger = require('./utils/logger')
 const GraphQLServer = require('graphql-yoga').GraphQLServer
 const mergeSchemas = require('graphql-tools').mergeSchemas
 const remoteExecutableSchemas = require('./remoteExecutableSchemas')
+require('dotenv').config()
 
 async function run() {
   const schema = mergeSchemas({
@@ -23,9 +21,11 @@ async function run() {
     }
   })
 
-  server.start({
-    port: process.env.PORT
-  }, () => logger.info(`The API server is running on http://localhost:${process.env.PORT}`))
+  server.start({ port: process.env.PORT }, () =>
+    logger.info(
+      `The API server is running on http://localhost:${process.env.PORT}`
+    )
+  )
 }
 
 try {

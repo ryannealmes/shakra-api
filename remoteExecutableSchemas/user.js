@@ -13,15 +13,17 @@ module.exports = async () => {
   const contextLink = setContext((request, previousContext) => {
     return {
       headers: {
-        authorization: previousContext.graphqlContext.request.headers.authorization
+        authorization:
+          previousContext.graphqlContext.request.headers.authorization
       }
     }
   })
 
-  const userServiceLink = () => createHttpLink({
-    uri: process.env.USER_SERVICE_URI,
-    fetch
-  })
+  const userServiceLink = () =>
+    createHttpLink({
+      uri: process.env.USER_SERVICE_URI,
+      fetch
+    })
 
   const userServiceSchemaDefinition = await introspectSchema(userServiceLink())
 
