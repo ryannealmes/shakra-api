@@ -9,7 +9,7 @@ const setContext = require('apollo-link-context').setContext
 const createHttpLink = require('apollo-link-http').createHttpLink
 const ApolloLink = require('apollo-link').ApolloLink
 
-module.exports = async () => {
+module.exports = async serviceUri => {
   const contextLink = setContext((request, previousContext) => {
     return {
       headers: {
@@ -19,16 +19,11 @@ module.exports = async () => {
     }
   })
 
-  const goalServiceLink = () =>
-    createHttpLink({
-      uri: process.env.GOAL_SERVICE_URI,
-      fetch
-    })
-
-  const goalServiceSchemaDefinition = await introspectSchema(goalServiceLink())
+  const serviceLink = () => createHttpLink({ uri: serviceUri, fetch })
+  const serviceSchemaDefinition = await introspectSchema(serviceLink())
 
   return makeRemoteExecutableSchema({
-    schema: goalServiceSchemaDefinition,
-    link: ApolloLink.from([contextLink, goalServiceLink()])
+    schema: serviceSchemaDefinition,
+    link: ApolloLink.from([contextLink, serviceLink()])
   })
 }
